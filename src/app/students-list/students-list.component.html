@@ -1,0 +1,6 @@
+<h1>students list</h1>
+<ul>
+  @for (student of students(); track student.id) {
+    <li>{{ student.firstName }} {{ student.lastName }} ({{ student.phone }}, {{ student.email }})</li>
+  }
+</ul>

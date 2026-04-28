@@ -1,0 +1,87 @@
+<h1>template-driven-form</h1>
+<p>{{ myForm.value | json }}</p>
+<form (ngSubmit)="addStudent()" #myForm="ngForm">
+  <div>
+    <label for="firstName">first name: </label>
+    <input
+      type="text"
+      id="firstName"
+      name="first"
+      [(ngModel)]="newStudent.firstName"
+      required
+      minlength="3"
+    />
+  </div>
+  @let f = myForm.controls['first'];
+  <!-- valid/invalid - האם חוקי -->
+  <!-- touched/untouched - האם נגענו באינפוט -->
+  <!-- dirty/pristine - האם כתבנו באינפוט -->
+  @if (f?.invalid && f?.touched) {
+    <div class="errors">
+      @if (f?.hasError('required')) {
+        <p>name is required</p>
+      } @else if (f?.errors?.['minlength']) {
+        <p>
+          add
+          {{ f?.getError('minlength').requiredLength - f?.getError('minlength').actualLength }}
+          characters
+        </p>
+      }
+      <p>{{ myForm.controls['first'].errors | json }}</p>
+    </div>
+  }
+  <div>
+    <label for="lastName">last name: </label>
+    <input
+      type="text"
+      id="lastName"
+      name="last"
+      [(ngModel)]="newStudent.lastName"
+      #lastModel1="ngModel"
+      required
+      minlength="3"
+    />
+  </div>
+  @if (lastModel1?.invalid && lastModel1?.touched) {
+    <div class="errors">
+      @if (lastModel1?.hasError('required')) {
+        <p>name is required</p>
+      } @else if (lastModel1?.errors?.['minlength']) {
+        <p>
+          add
+          {{
+            lastModel1?.getError('minlength').requiredLength -
+              lastModel1?.getError('minlength').actualLength
+          }}
+          characters
+        </p>
+      }
+      <p>{{ lastModel1.errors | json }}</p>
+    </div>
+  }
+  <div>
+    <label for="phone">phone: </label>
+    <input
+      type="text"
+      id="phone"
+      name="phone"
+      pattern="^05\d([-]{0,1})\d{7}$"
+      
+      [(ngModel)]="newStudent.phone"
+      #pModel="ngModel"
+    />
+  </div>
+  @if(pModel.errors && pModel.dirty) {
+    <div class="errors">must match to 050-1234567 pattern</div>
+    <div>{{pModel.errors | json}}</div>
+  }
+  <div>
+    <label for="email">email: </label>
+    <!-- לא מתייחס לסוג האינפוט רק לבדיקות ששמנו בתור אטריביוט -->
+    <input type="email" id="email" name="email" email [(ngModel)]="newStudent.email" #emailM="ngModel" />
+  </div>
+  @if(emailM.errors) {
+    <div class="errors">{{emailM.errors | json}}</div>
+  }
+  <div><button [disabled]="myForm.invalid">Add Student</button></div>
+</form>
