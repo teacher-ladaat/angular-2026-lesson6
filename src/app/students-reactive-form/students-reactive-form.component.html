@@ -1,0 +1,74 @@
+<h1>reactive-form</h1>
+<!-- טופס שהלוגיקה שלו מנוהלת דרך הקלאס-הטייפסקריפט -->
+<p>{{ studentForm.value | json }}</p>
+<form [formGroup]="studentForm" (ngSubmit)="addStudent()">
+  <div formGroupName="name">
+    <div>
+      <label for="firstName">first name: </label>
+      <input type="text" id="firstName" formControlName="firstName" />
+    </div>
+    @let f = studentForm.get('firstName');
+    {{ f?.errors | json }}
+    <!-- valid/invalid - האם חוקי -->
+    <!-- touched/untouched - האם נגענו באינפוט -->
+    <!-- dirty/pristine - האם כתבנו באינפוט -->
+    @if (f?.invalid && f?.touched) {
+      <div class="errors">
+        @if (f?.hasError('required')) {
+          <p>name is required</p>
+        } @else if (f?.errors?.['minlength']) {
+          <p>
+            add
+            {{ f?.getError('minlength').requiredLength - f?.getError('minlength').actualLength }}
+            characters
+          </p>
+        }
+      </div>
+    }
+    <div>
+      <label for="lastName">last name: </label>
+      <input type="text" id="lastName" formControlName="lastName" />
+    </div>
+
+    @let l = studentForm.get('lastName');
+    @if (l?.invalid && l?.touched) {
+      <div class="errors">
+        @if (l?.hasError('required')) {
+          <p>name is required</p>
+        } @else if (l?.errors?.['minlength']) {
+          <p>
+            add
+            {{ l?.getError('minlength').requiredLength - l?.getError('minlength').actualLength }}
+            characters
+          </p>
+        }
+      </div>
+    }
+  </div>
+  <div>
+    <label for="phone">phone: </label>
+    <input type="text" id="phone" name="phone" />
+  </div>
+  @let pModel = studentForm.controls['phone'];
+  @if (pModel.errors && pModel.dirty) {
+    <div class="errors">must match to 050-1234567 pattern</div>
+    <div>{{ pModel.errors | json }}</div>
+  }
+  <div>
+    <label for="email">email: </label>
+    <!-- לא מתייחס לסוג האינפוט רק לבדיקות ששמנו בתור אטריביוט -->
+    <input type="email" id="email" formControlName="email" />
+  </div>
+  @let emailM = studentForm.controls['phone'];
+  @if (emailM.errors) {
+    <div class="errors">{{ emailM.errors | json }}</div>
+  }
+  <div formArrayName="marks">
+    <label for="marks">Marks</label>
+    @for (m of arrMarks; track $index) {
+        <input type="text" [formControlName]="$index">
+    }
+    <button type="button" (click)="addMark()">+</button>
+  </div>
+  <div><button [disabled]="studentForm.invalid">Add Student</button></div>
+</form>
