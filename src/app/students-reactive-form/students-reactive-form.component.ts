@@ -24,12 +24,12 @@ export class StudentsReactiveFormComponent {
     ),
     email: new FormControl('', Validators.email),
     marks: new FormArray([
-      new FormControl(90, [Validators.min(0), Validators.max(100), Validators.required, Validators.pattern(/^\d+$/)]),
+      new FormControl(90, [Validators.min(0), Validators.max(100), Validators.required]),
     ]),
   });
 
-  get arrMarks() {
-    return (this.studentForm.get('marks') as FormArray).controls;
+  get arrMarks(): FormArray {
+    return this.studentForm.get('marks') as FormArray;
   }
 
   addStudent() {
@@ -39,8 +39,8 @@ export class StudentsReactiveFormComponent {
   }
 
   addMark() {
-    (this.studentForm.get('marks') as FormArray).push(
+    this.arrMarks.push(
       new FormControl('', [Validators.min(0), Validators.max(100), Validators.required]),
-    )
+    );
   }
 }

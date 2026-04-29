@@ -56,7 +56,7 @@
   }
   <div formArrayName="marks">
     <label for="marks">Marks</label>
-    @for (m of arrMarks; track $index) {
+    @for (m of arrMarks.controls; track $index) {
       <input type="number" [formControlName]="$index" />
       @let markI = studentForm.get('marks.' + $index);
       @if (markI?.invalid && markI?.touched) {
