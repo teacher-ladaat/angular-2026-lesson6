@@ -7,8 +7,8 @@
       <label for="firstName">first name: </label>
       <input type="text" id="firstName" formControlName="firstName" />
     </div>
-    @let f = studentForm.get('firstName');
-    {{ f?.errors | json }}
+    <!-- גישה לפקד בתוך קבוצה ע"י שם הקבוצה.שם הפקד -->
+    @let f = studentForm.get('name.firstName');
     <!-- valid/invalid - האם חוקי -->
     <!-- touched/untouched - האם נגענו באינפוט -->
     <!-- dirty/pristine - האם כתבנו באינפוט -->
@@ -30,7 +30,7 @@
       <input type="text" id="lastName" formControlName="lastName" />
     </div>
 
-    @let l = studentForm.get('lastName');
+    @let l = studentForm.get('name.lastName');
     @if (l?.invalid && l?.touched) {
       <div class="errors">
         @if (l?.hasError('required')) {
