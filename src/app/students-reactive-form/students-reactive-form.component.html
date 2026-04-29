@@ -14,15 +14,7 @@
     <!-- dirty/pristine - האם כתבנו באינפוט -->
     @if (f?.invalid && f?.touched) {
       <div class="errors">
-        @if (f?.hasError('required')) {
-          <p>name is required</p>
-        } @else if (f?.errors?.['minlength']) {
-          <p>
-            add
-            {{ f?.getError('minlength').requiredLength - f?.getError('minlength').actualLength }}
-            characters
-          </p>
-        }
+        <p>name is required</p>
       </div>
     }
     <div>
@@ -66,7 +58,7 @@
   <div formArrayName="marks">
     <label for="marks">Marks</label>
     @for (m of arrMarks; track $index) {
-        <input type="text" [formControlName]="$index">
+      <input type="text" [formControlName]="$index" />
     }
     <button type="button" (click)="addMark()">+</button>
   </div>
