@@ -39,12 +39,11 @@
   </div>
   <div>
     <label for="phone">phone: </label>
-    <input type="text" id="phone" name="phone" />
+    <input type="text" id="phone" formControlName="phone" />
   </div>
   @let pModel = studentForm.controls['phone'];
   @if (pModel.errors && pModel.dirty) {
     <div class="errors">must match to 050-1234567 pattern</div>
-    <div>{{ pModel.errors | json }}</div>
   }
   <div>
     <label for="email">email: </label>
