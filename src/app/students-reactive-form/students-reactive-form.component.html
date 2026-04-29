@@ -50,7 +50,7 @@
     <!-- לא מתייחס לסוג האינפוט רק לבדיקות ששמנו בתור אטריביוט -->
     <input type="email" id="email" formControlName="email" />
   </div>
-  @let emailM = studentForm.controls['phone'];
+  @let emailM = studentForm.controls['email'];
   @if (emailM.errors) {
     <div class="errors">{{ emailM.errors | json }}</div>
   }
