@@ -57,7 +57,19 @@
   <div formArrayName="marks">
     <label for="marks">Marks</label>
     @for (m of arrMarks; track $index) {
-      <input type="text" [formControlName]="$index" />
+      <input type="number" [formControlName]="$index" />
+      @let markI = studentForm.get('marks.' + $index);
+      @if (markI?.invalid && markI?.touched) {
+        <div class="errors">
+          @if (markI?.hasError('required')) {
+            <p>mark is required</p>
+          } @else if (markI?.hasError('min')) {
+            <p>mark must be at least {{ markI?.getError('min').min }}</p>
+          } @else if (markI?.hasError('max')) {
+            <p>mark must be at most {{ markI?.getError('max').max }}</p>
+          }
+        </div>
+      }
     }
     <button type="button" (click)="addMark()">+</button>
   </div>

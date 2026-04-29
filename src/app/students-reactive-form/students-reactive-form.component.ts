@@ -24,7 +24,7 @@ export class StudentsReactiveFormComponent {
     ),
     email: new FormControl('', Validators.email),
     marks: new FormArray([
-      new FormControl(90, [Validators.min(0), Validators.max(100), Validators.required]),
+      new FormControl(90, [Validators.min(0), Validators.max(100), Validators.required, Validators.pattern(/^\d+$/)]),
     ]),
   });
 
